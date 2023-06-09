@@ -13,6 +13,11 @@ export function CharacterForm ({ onAddCharacter }) {
     setIsEmptyName(false)
     if (!nombre.trim().length) {
       setIsEmptyName(true)
+    // Hacer que el mensaje de error desaparezca a los 3 segundos
+      setTimeout(() => {
+        setIsEmptyName(false)
+      }, 3000)
+      
       // poner cursor en su sitio. En JS: document.querySelector('#nombre').focus()
       // en React:
       nombreRef.current.focus()
