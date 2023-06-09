@@ -3,21 +3,23 @@ import PropTypes from 'prop-types'
 import { v4 as uuidv4 } from 'uuid'
 import { useForm } from '../hooks/useForm'
 import { Message } from './Message'
+import { CustomInput } from './CustomInput'
 
 export function CharacterForm ({ onAddCharacter }) {
   const { nombre, peso, altura, handleChange } = useForm({ nombre: '', peso: 0, altura: 0 })
   const [isEmptyName, setIsEmptyName] = useState(false)
   const nombreRef = useRef(null)
+  const pesoRef = useRef()
   const handleSubmit = (event) => {
     event.preventDefault()
     setIsEmptyName(false)
     if (!nombre.trim().length) {
       setIsEmptyName(true)
-    // Hacer que el mensaje de error desaparezca a los 3 segundos
+      // Hacer que el mensaje de error desaparezca a los 3 segundos
       setTimeout(() => {
         setIsEmptyName(false)
       }, 3000)
-      
+
       // poner cursor en su sitio. En JS: document.querySelector('#nombre').focus()
       // en React:
       nombreRef.current.focus()
@@ -31,6 +33,7 @@ export function CharacterForm ({ onAddCharacter }) {
   return (
     <form onSubmit={handleSubmit} className='max-w-lg mx-auto'>
       <div className='mb-4'>
+
         <label htmlFor='nombre' className='block mb-2 font-bold text-gray-700'>
           Nombre
           {
@@ -49,18 +52,17 @@ export function CharacterForm ({ onAddCharacter }) {
         />
       </div>
       <div className='mb-4'>
-        <label htmlFor='peso' className='block mb-2 font-bold text-gray-700'>
-          Peso (kg)
-        </label>
-        <input
+        <CustomInput
+          ref={pesoRef}
           type='number'
-          id='peso'
           name='peso'
           onChange={handleChange}
           value={peso}
           placeholder='Introduce tu peso'
-          className='w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
-        />
+        >
+          Peso (kg)
+        </CustomInput>
+
       </div>
       <div className='mb-4'>
         <label htmlFor='altura' className='block mb-2 font-bold text-gray-700'>
